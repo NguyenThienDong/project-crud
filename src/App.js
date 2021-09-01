@@ -5,13 +5,14 @@ import './App.css';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
 import TaskControl from './components/TaskControl';
+import { connect } from 'react-redux';
+import { toggleForm } from './actions/index';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             taskEdit: null,
-            isDisplayForm: false,
             keyword: '',
             filter: {
                 name: 'name',
@@ -29,32 +30,6 @@ class App extends Component {
                 tasks: tasks
             })
         }
-    }
-
-
-    onToggleForm = () => {
-        if(this.state.isDisplayForm && this.state.taskEdit !== 'null'){
-            this.setState({
-                isDisplayForm: true,
-                taskEdit: null
-            })
-        }else {
-            this.setState({
-                isDisplayForm: !this.state.isDisplayForm
-            })
-        }
-    }
-
-    onCloseForm = () => {
-        this.setState({
-            isDisplayForm: false
-        })
-    }
-
-    onShowForm = () => {
-        this.setState({
-            isDisplayForm: true
-        })
     }
 
     onFilter = (filterName , filterStatus) => {
@@ -103,7 +78,8 @@ class App extends Component {
     }
 
     render() {
-        let { isDisplayForm, taskEdit, sortBy, sortValue } = this.state;
+        let {taskEdit, sortBy, sortValue } = this.state;
+        let {isDisplayForm, onToggleForm} = this.props;
         // if(filter) {
         //     if(filter.name){
         //         tasks = tasks.filter(task => {
@@ -157,7 +133,7 @@ class App extends Component {
                         { elmTaskForm }
                     </div>
                     <div className={isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
-                        <button type="button" className="btn btn-primary mb-10" onClick={this.onToggleForm} >
+                        <button type="button" className="btn btn-primary mb-10" onClick={() => onToggleForm()} >
                             <span className="fa fa-plus mr-5"></span>Thêm Công Việc
                         </button>
                         <TaskControl 
@@ -179,4 +155,16 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        isDisplayForm: state.isDisplayForm
+    }
+}
+
+const mapActionsToProps = (dispatch) => {
+    return {
+        onToggleForm: () => dispatch(toggleForm())
+    }
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(App);

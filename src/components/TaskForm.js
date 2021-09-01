@@ -39,11 +39,6 @@ class TaskForm extends  Component{
             })
         }
     }
-    
-
-    onCloseForm = () => {
-        this.props.onCloseForm()   
-    }
 
     onChange = (e) => {
         let target = e.target;
@@ -61,7 +56,7 @@ class TaskForm extends  Component{
         e.preventDefault();
         this.props.onAddTask(this.state);
         this.onClear();
-        this.onCloseForm();
+        this.props.onCloseForm();
     }
 
     onClear = () => {
@@ -73,13 +68,14 @@ class TaskForm extends  Component{
 
     render() {
         const { name, status, id } = this.state;
+        const {onCloseForm} = this.props;
 
         return (
             <div className="panel panel-lg panel-warning">
                 <div className="panel-heading">
                     <h3 className="panel-title">
                         {id !== '' ? 'Cập nhật công việc' : 'Thêm công việc'}
-                    <span className="fa fa-times-circle text-right" onClick={this.onCloseForm}></span>
+                    <span className="fa fa-times-circle text-right" onClick={() => onCloseForm()}></span>
                     </h3>
                 </div>
                 <div className="panel-body">
@@ -136,6 +132,9 @@ const mapActionsToProps = (dispatch) => {
     return {
         onAddTask: (task) => {
             dispatch(actions.addTask(task))
+        },
+        onCloseForm: () => {
+            dispatch(actions.closeForm())
         }
     }
 }
