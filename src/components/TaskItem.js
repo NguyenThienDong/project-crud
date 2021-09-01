@@ -1,20 +1,15 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { deleteTask, updateStatus } from '../actions';
 
-export default class TaskItem extends Component {
-    onUpdateStatus = () => {
-        this.props.onUpdateStatus(this.props.task.id)
-    }
-
-    onDeleteItem = () => {
-        this.props.onDeleteItem(this.props.task.id)
-    }
+class TaskItem extends Component {
 
     onUpdate = () => {
         this.props.onUpdate(this.props.task.id)
     }
 
     render() {
-        const {index, task} = this.props;
+        const {index, task, onUpdateStatus, onDeleteItem} = this.props;
         return(
             <tr>
                 <td>{index + 1}</td>
@@ -22,7 +17,7 @@ export default class TaskItem extends Component {
                 <td className="text-center">
                     <span 
                         className={task.status ? 'label label-danger' : 'label label-success'}
-                        onClick={this.onUpdateStatus}
+                        onClick={() => onUpdateStatus(task.id)}
                     >{task.status ? 'Kích hoạt' : 'Ẩn'}</span>
                 </td>
                 <td className="text-center">
@@ -30,7 +25,7 @@ export default class TaskItem extends Component {
                         <span className="fa fa-pencil mr-5" onClick={this.onUpdate}></span>Sửa
                     </button>
                     &nbsp;
-                    <button type="button" className="btn btn-danger" onClick={ this.onDeleteItem }>
+                    <button type="button" className="btn btn-danger" onClick={ () => onDeleteItem(task.id) }>
                         <span className="fa fa-trash mr-5"></span>Xóa
                     </button>
                 </td>
@@ -38,3 +33,12 @@ export default class TaskItem extends Component {
         )
     }
 }
+
+const mapActionsToProps = (dispatch) => {
+    return {
+        onUpdateStatus: (id) => dispatch(updateStatus(id)),
+        onDeleteItem: (id) => dispatch(deleteTask(id))
+    }
+}
+
+export default connect(null, mapActionsToProps)(TaskItem)

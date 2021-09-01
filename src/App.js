@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import randomString from 'randomstring';
-
 import './App.css';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
@@ -52,17 +50,6 @@ class App extends Component {
     //     this.onShowForm();
     // }
 
-
-    // findIndex = (id) => {
-    //     let result = - 1;
-    //     let { tasks } = this.state;
-    //     tasks.forEach((task, index) => {
-    //         if(task.id === id) {
-    //             result = index;
-    //         }
-    //     })
-    //     return result;
-    // }
 
     onSearch = (keyword) => {
         this.setState({
@@ -143,8 +130,6 @@ class App extends Component {
                             sortValue={sortValue}
                         />
                         <TaskList 
-                            onUpdateStatus={this.onUpdateStatus} 
-                            onDeleteItem={this.onDeleteItem}
                             onUpdate={this.onUpdate}
                             onFilter={this.onFilter}
                         />
