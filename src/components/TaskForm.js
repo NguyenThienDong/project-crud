@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index';
 
-export default class TaskForm extends  Component{
+class TaskForm extends  Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -20,15 +22,15 @@ export default class TaskForm extends  Component{
         }
     }
 
-    static getDerivedStateFromProps(nextProps) {
-        if(nextProps && nextProps.task !== null){
-            return {
-                id: nextProps.task.id,
-                name: nextProps.task.name,
-                status: nextProps.task.status
-            }
-        }
-    }
+    // static getDerivedStateFromProps(nextProps) {
+    //     if(nextProps && nextProps.task !== null){
+    //         return {
+    //             id: nextProps.task.id,
+    //             name: nextProps.task.name,
+    //             status: nextProps.task.status
+    //         }
+    //     }
+    // }
 
     componentDidUpdate(prevProps, preState) {
         if(prevProps.task !== this.props.task) {
@@ -57,7 +59,7 @@ export default class TaskForm extends  Component{
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.onSubmit(this.state);
+        this.props.onAddTask(this.state);
         this.onClear();
         this.onCloseForm();
     }
@@ -125,3 +127,17 @@ export default class TaskForm extends  Component{
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {}
+}
+
+const mapActionsToProps = (dispatch) => {
+    return {
+        onAddTask: (task) => {
+            dispatch(actions.addTask(task))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(TaskForm)

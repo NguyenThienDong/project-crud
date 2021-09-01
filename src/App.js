@@ -57,46 +57,6 @@ class App extends Component {
         })
     }
 
-    // onSubmit = (data) => {
-    //     let { tasks} = this.state;
-    //     if(data.id === '') {
-    //         data.id = randomString.generate(); 
-    //         tasks.push(data);
-    //     }else {
-    //         let index = this.findIndex(data.id);
-    //         tasks[index] = data;
-    //     }
-    //     this.setState({
-    //         tasks: tasks
-    //     })
-    //     localStorage.setItem('tasks', JSON.stringify(tasks));
-    // }
-
-    // onUpdateStatus = (id) => {
-    //     let index = this.findIndex(id);
-    //     let { tasks } = this.state;
-    //     if(index !== -1) {
-    //         tasks[index].status = !tasks[index].status
-    //     }
-    //     this.setState({
-    //         tasks: tasks
-    //     })
-    //     localStorage.setItem('tasks', JSON.stringify(tasks));
-    // }
-
-    // onDeleteItem = (id) => {
-    //     let index = this.findIndex(id);
-    //     let { tasks } = this.state;
-    //     if(index !== -1) {
-    //         tasks.splice(index, 1)
-    //     }
-    //     this.setState({
-    //         tasks: tasks
-    //     })
-    //     localStorage.setItem('tasks', JSON.stringify(tasks));
-    //     this.onCloseForm();
-    // }
-
     onFilter = (filterName , filterStatus) => {
         filterStatus = parseInt(filterStatus)
         this.setState({
@@ -185,7 +145,6 @@ class App extends Component {
         const elmTaskForm = isDisplayForm ? 
             <TaskForm 
                 onCloseForm={this.onCloseForm} 
-                onSubmit={this.onSubmit}
                 task={taskEdit}
             /> : '';
         return (
