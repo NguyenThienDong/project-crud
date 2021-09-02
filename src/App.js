@@ -11,24 +11,11 @@ class App extends Component {
         super(props);
         this.state = {
             keyword: '',
-            filter: {
-                name: 'name',
-                status:-1
-            },
             sortBy: '',
             sortValue: 1
         }
     }
 
-    onFilter = (filterName , filterStatus) => {
-        filterStatus = parseInt(filterStatus)
-        this.setState({
-            filter: {
-                name: filterName.toLowerCase(),
-                status: filterStatus
-            }
-        })
-    }
 
     onToggleForm = () => {
         var {taskEditting} = this.props;
@@ -61,22 +48,6 @@ class App extends Component {
     render() {
         let { sortBy, sortValue } = this.state;
         let {isDisplayForm} = this.props;
-        // if(filter) {
-        //     if(filter.name){
-        //         tasks = tasks.filter(task => {
-        //             return task.name.toLowerCase().indexOf(filter.name) !== -1
-        //         })
-        //     }
-        //     tasks = tasks.filter(task => {
-        //         var result = null;
-        //         if(filter.status === -1) {
-        //             result = task
-        //         }else {
-        //             result = task.status === (filter.status === 1 ? true : false)
-        //         }
-        //         return result;
-        //     })
-        // }
 
         // if(keyword) {
         //     tasks = tasks.filter(task => {
@@ -118,9 +89,7 @@ class App extends Component {
                             sortBy={sortBy}
                             sortValue={sortValue}
                         />
-                        <TaskList 
-                            onFilter={this.onFilter}
-                        />
+                        <TaskList />
                     </div>
                 </div>
             </div>

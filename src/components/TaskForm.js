@@ -121,7 +121,7 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapActionsToProps = (dispatch) => {
     return {
         onSaveTask : (task) => {
             dispatch(actions.saveTask(task));
@@ -132,4 +132,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(TaskForm);
+export default connect(mapStateToProps,mapActionsToProps)(TaskForm);

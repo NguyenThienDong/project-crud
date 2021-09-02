@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import TaskItem from './TaskItem';
+import * as actions from '../actions/index';
 
 class TaskList extends  Component{
     constructor(props) {
@@ -16,17 +17,35 @@ class TaskList extends  Component{
         var target = e.target;
         var value = target.value;
         var name = target.name;
-        this.props.onFilter(
-            name === 'filterName' ? value : filterName,
-            name === 'filterStatus' ? value : filterStatus
-        )
+        var filter = {
+            name: name === 'filterName' ? value : filterName,
+            status: name === 'filterStatus' ? value : filterStatus
+        }
+        this.props.onFilter(filter);
+
         this.setState({
             [name]: value
         })
     }
 
     render() {
-        const { tasks } = this.props;
+        let { tasks, filterTable } = this.props;
+        
+        if(filterTable.name){
+            tasks = tasks.filter(task => {
+                return task.name.toLowerCase().indexOf(filterTable.name) !== -1
+            })
+        }
+        tasks = tasks.filter(task => {
+            var result = null;
+            if(filterTable.status === -1) {
+                result = task
+            }else {
+                result = task.status === (filterTable.status === 1 ? true : false)
+            }
+            return result;
+        })
+       
         const { filterName, filterStatus } = this.state;
         const elmTasks = tasks.map((task, index) => (
             <TaskItem 
@@ -84,8 +103,15 @@ class TaskList extends  Component{
 
 const mapStateToProps = state => {
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        filterTable: state.filterTable
     }
 }
 
-export default connect(mapStateToProps, null)(TaskList)
+const mapActionsToProps = (dispatch) => {
+    return {
+        onFilter: (filter) => dispatch(actions.filterTable(filter))
+    }
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(TaskList)
