@@ -2,7 +2,7 @@ import { CLOSE_FORM, OPEN_FORM, TOGGLE_FORM } from "../constants/actionTypes";
 
 let initialState = false;
 
-const taskReducer = (state = initialState, action) => {
+const myReducer = (state = initialState, action) => {
     switch(action.type) {
         case TOGGLE_FORM:
             return !state;
@@ -15,4 +15,4 @@ const taskReducer = (state = initialState, action) => {
     }
 }
 
-export default taskReducer;
+export default myReducer;

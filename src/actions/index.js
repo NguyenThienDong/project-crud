@@ -1,4 +1,4 @@
-import { ADD_TASK, ALL_LIST, CLOSE_FORM, DELETE_TASK, OPEN_FORM, TOGGLE_FORM, UPDATE_STATUS } from "../constants/actionTypes"
+import { SAVE_TASK, ALL_LIST, CLOSE_FORM, DELETE_TASK, EDIT_TASK, OPEN_FORM, TOGGLE_FORM, UPDATE_STATUS } from "../constants/actionTypes"
 
 export const allList = () => {
     return{
@@ -6,9 +6,9 @@ export const allList = () => {
     }
 }
 
-export const addTask = (task) => {
+export const saveTask = (task) => {
     return{
-        type: ADD_TASK,
+        type: SAVE_TASK,
         task
     }
 }
@@ -42,5 +42,12 @@ export const deleteTask = (id) => {
     return{
         type: DELETE_TASK,
         id
+    }
+}
+
+export const editTask = (task) => {
+    return{
+        type: EDIT_TASK,
+        task
     }
 }

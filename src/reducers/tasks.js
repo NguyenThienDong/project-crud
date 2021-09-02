@@ -1,11 +1,11 @@
 import randomString from 'randomstring';
-import { ADD_TASK, ALL_LIST, DELETE_TASK, UPDATE_STATUS } from "../constants/actionTypes";
+import { SAVE_TASK, ALL_LIST, DELETE_TASK, UPDATE_STATUS } from "../constants/actionTypes";
 import {findIndex} from 'lodash';
 
 let data = JSON.parse(localStorage.getItem('tasks'))
 let initialState = data ? data : [];
 
-const taskReducer = (state = initialState, action) => {
+const myReducer = (state = initialState, action) => {
     var index = findIndex(state, function(task){
         return task.id === action.id
     })
@@ -13,14 +13,22 @@ const taskReducer = (state = initialState, action) => {
     switch(action.type) {
         case ALL_LIST:
             return state;
-        case ADD_TASK:
-            console.log(action);
-            let newTask = {
-                id: randomString.generate(),
+        case SAVE_TASK:
+            let task = {
+                id: action.task.id,
                 name: action.task.name,
-                status: action.task.status
+                status: (action.task.status === 'true' || action.task.status === true) ? true : false
             }
-            state.push(newTask);
+            if(!task.id) {
+                task.id = randomString.generate();
+                state.push(task);
+            }else {
+                index = findIndex(state, function(task) {
+                    return task.id === action.task.id
+                })
+                console.log(index);
+                state[index] = task;
+            }
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         case UPDATE_STATUS:
@@ -39,4 +47,4 @@ const taskReducer = (state = initialState, action) => {
     }
 }
 
-export default taskReducer;
+export default myReducer;

@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { deleteTask, updateStatus } from '../actions';
+import { closeForm, deleteTask, editTask, openForm, updateStatus } from '../actions/index';
 
 class TaskItem extends Component {
 
-    onUpdate = () => {
-        this.props.onUpdate(this.props.task.id)
+    onEditTask = () => {
+        this.props.onOpenForm();
+        this.props.onEditTask(this.props.task);
+    }
+
+    onDeleteItem = () => {
+        this.props.onDeleteItem(this.props.task.id);
+        this.props.onCloseForm();
     }
 
     render() {
-        const {index, task, onUpdateStatus, onDeleteItem} = this.props;
+        const {index, task, onUpdateStatus} = this.props;
         return(
             <tr>
                 <td>{index + 1}</td>
@@ -21,11 +27,11 @@ class TaskItem extends Component {
                     >{task.status ? 'Kích hoạt' : 'Ẩn'}</span>
                 </td>
                 <td className="text-center">
-                    <button type="button" className="btn btn-warning"onClick={this.onUpdate}>
-                        <span className="fa fa-pencil mr-5" onClick={this.onUpdate}></span>Sửa
+                    <button type="button" className="btn btn-warning" onClick={this.onEditTask}>
+                        <span className="fa fa-pencil mr-5"></span>Sửa
                     </button>
                     &nbsp;
-                    <button type="button" className="btn btn-danger" onClick={ () => onDeleteItem(task.id) }>
+                    <button type="button" className="btn btn-danger" onClick={this.onDeleteItem}>
                         <span className="fa fa-trash mr-5"></span>Xóa
                     </button>
                 </td>
@@ -34,11 +40,20 @@ class TaskItem extends Component {
     }
 }
 
-const mapActionsToProps = (dispatch) => {
+const mapStateToProps = state => {
     return {
-        onUpdateStatus: (id) => dispatch(updateStatus(id)),
-        onDeleteItem: (id) => dispatch(deleteTask(id))
+        
     }
 }
 
-export default connect(null, mapActionsToProps)(TaskItem)
+const mapActionsToProps = (dispatch) => {
+    return {
+        onUpdateStatus: (id) => dispatch(updateStatus(id)),
+        onDeleteItem: (id) => dispatch(deleteTask(id)),
+        onCloseForm: () => dispatch(closeForm()),
+        onOpenForm: () => dispatch(openForm()),
+        onEditTask: (task) => dispatch(editTask(task))
+    }
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(TaskItem)
