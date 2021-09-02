@@ -29,7 +29,7 @@ class TaskList extends  Component{
     }
 
     render() {
-        let { tasks, filterTable } = this.props;
+        let { tasks, filterTable, keyword } = this.props;
         
         if(filterTable.name){
             tasks = tasks.filter(task => {
@@ -45,6 +45,12 @@ class TaskList extends  Component{
             }
             return result;
         })
+
+        if(keyword) {
+            tasks = tasks.filter(task => {
+                return task.name.toLowerCase().indexOf(keyword) !== -1
+            })
+        }
        
         const { filterName, filterStatus } = this.state;
         const elmTasks = tasks.map((task, index) => (
@@ -104,7 +110,8 @@ class TaskList extends  Component{
 const mapStateToProps = state => {
     return {
         tasks: state.tasks,
-        filterTable: state.filterTable
+        filterTable: state.filterTable,
+        keyword: state.search
     }
 }
 

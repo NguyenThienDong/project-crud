@@ -10,7 +10,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            keyword: '',
             sortBy: '',
             sortValue: 1
         }
@@ -32,12 +31,6 @@ class App extends Component {
         
     }
 
-    onSearch = (keyword) => {
-        this.setState({
-            keyword: keyword.toLowerCase()
-        })
-    }
-
     onSort = (sortBy, sortValue) => {
         this.setState({
             sortBy: sortBy,
@@ -49,11 +42,7 @@ class App extends Component {
         let { sortBy, sortValue } = this.state;
         let {isDisplayForm} = this.props;
 
-        // if(keyword) {
-        //     tasks = tasks.filter(task => {
-        //         return task.name.toLowerCase().indexOf(keyword) !== -1
-        //     })
-        // }
+        
 
         // if(sortBy === 'name') {
         //     tasks.sort((a, b) => {
