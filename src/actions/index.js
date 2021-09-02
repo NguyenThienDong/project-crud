@@ -1,4 +1,4 @@
-import { SAVE_TASK, ALL_LIST, CLOSE_FORM, DELETE_TASK, EDIT_TASK, OPEN_FORM, TOGGLE_FORM, UPDATE_STATUS, FILTER_TABLE, SEARCH } from "../constants/actionTypes"
+import { SAVE_TASK, ALL_LIST, CLOSE_FORM, DELETE_TASK, EDIT_TASK, OPEN_FORM, TOGGLE_FORM, UPDATE_STATUS, FILTER_TABLE, SEARCH, SORT } from "../constants/actionTypes"
 
 export const allList = () => {
     return{
@@ -63,5 +63,12 @@ export const search = (keyword) => {
     return{
         type: SEARCH,
         keyword
+    }
+}
+
+export const sortTask = (sort) => {
+    return{
+        type: SORT,
+        sort
     }
 }
